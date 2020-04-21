@@ -1,14 +1,14 @@
 # Blop Api
 An Api that provides CRUD for blog posts and commenting on corresponding posts
 
-### Prequesite for project
+### Prerequisite for project
 - Nodejs [environment](https://nodejs.org/en/)
 - Text Editor [Microsoft Visual studio code](https://code.visualstudio.com/)
 - Github bash [terminal](https://git-scm.com/downloads) 
 - Postman API [development](https://www.getpostman.com/)
 
 ### Clone
-- 1. Clone the repo. run command `git clone https://github.com/Mubangizi/blog-api.git`
+- Clone the repo. run command `git clone https://github.com/Mubangizi/blog-api.git`
 
 - Navigate into the folder that is cloned. run command `cd blog-api`
 
