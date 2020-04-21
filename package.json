@@ -1,0 +1,22 @@
+{
+  "name": "blog-api",
+  "version": "1.0.0",
+  "description": "For posts and there comments",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mubangizi/blog-api.git"
+  },
+  "author": "Mubangizi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mubangizi/blog-api/issues"
+  },
+  "homepage": "https://github.com/Mubangizi/blog-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
