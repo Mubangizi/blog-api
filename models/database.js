@@ -1,8 +1,6 @@
-const {Pool, Client} = require('pg'),
+const {Client} = require('pg'),
 dotenv = require('dotenv');
 dotenv.config();
-
-const connectionString = 'postgressql:///blog_api';
 
 const client = new Client({
   user: process.env.PGUSER,
@@ -12,10 +10,4 @@ const client = new Client({
   port:  process.env.PGPORT
 });
 
-client.connect();
-
-client.query(
-  'SELECT NOW()', (err, res) =>{
-  console.log(err, res)
-  client.end()
-});
+module.exports = client;
