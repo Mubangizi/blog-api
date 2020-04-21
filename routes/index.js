@@ -1,6 +1,6 @@
 
-const postRoutes = require('./post_routes');
-
+const postRoutes = require('./post_routes'),
+client = require("../models/database");
 
 
 module.exports = function(app) {
