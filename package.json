@@ -4,19 +4,24 @@
   "description": "For posts and there comments",
   "main": "server.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mubangizi/blog-api.git"
   },
   "author": "Mubangizi",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Mubangizi/blog-api/issues"
   },
   "homepage": "https://github.com/Mubangizi/blog-api#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }

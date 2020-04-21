@@ -1,7 +1,6 @@
 # Blop Api
 An Api that provides CRUD for blog posts and commenting on corresponding posts
 
-
 ### Prequesite for project
 - Nodejs [environment](https://nodejs.org/en/)
 - Text Editor [Microsoft Visual studio code](https://code.visualstudio.com/)
