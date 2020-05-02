@@ -13,6 +13,6 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Expose port 5000 and start node server
 EXPOSE 5000
-
 CMD [ "npm", "start" ]

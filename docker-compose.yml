@@ -1,0 +1,45 @@
+version: "3"
+services:
+  #Mysql Service
+  database:
+    restart: unless-stopped
+    image: mysql:5.7
+    container_name: blog-api-mysql-db
+    ports:
+      - "3305:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: blog_api
+      MYSQL_USER: node
+      MYSQL_PASSWORD: node
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+  #Node Service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mubangizi/blog-api:latest
+    container_name: blog-api
+    restart: unless-stopped
+    ports:
+      - "5000:5500"
+    environment:
+      DBHOST: database
+      DBUSER: node
+      DBDATABASE: blog_api
+      DBPASSWORD: node
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Volumes
+volumes:
+  db-data:
+    driver: local
