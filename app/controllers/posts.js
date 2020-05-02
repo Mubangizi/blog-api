@@ -1,7 +1,5 @@
 const Post = require("../models/posts.js");
 
-
-
 // Retrieve all Posts from the database.
 exports.findAll = (req, res) => {
   Post.getAll((err, data) => {
@@ -15,7 +13,6 @@ exports.findAll = (req, res) => {
     });
   });
 };
-
 
 // Create and Save a new Post
 exports.create = (req, res) => {
@@ -43,5 +40,24 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the Post."
       });
     else res.send(data);
+  });
+};
+
+// retrieve single post
+exports.findOne = (req, res) => {
+  Post.findById(req.params.postId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Post with id ${req.params.postId} not found.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Error retrieving Post with id " + req.params.postId
+        });
+      }
+    } else res.send({
+      post: data
+    });
   });
 };
