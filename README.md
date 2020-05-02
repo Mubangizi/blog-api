@@ -15,6 +15,7 @@ An Api that provides CRUD for blog posts and commenting on corresponding posts
 ### Installation of prerequisites
 - Nodejs [environment](https://nodejs.org/en/)
 - Postman API [development](https://www.getpostman.com/)
+- MySql [Server](https://dev.mysql.com/doc/refman/8.0/en/installing.html)
 
 ### Installing dependencies
  - To install the required dependencies, run the command `npm install`

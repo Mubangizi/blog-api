@@ -16,24 +16,23 @@ exports.findAll = (req, res) => {
 
 // Create and Save a new Post
 exports.create = (req, res) => {
-  const title = req.body.title, body = req.body.title
   // Validate request
-  if (!req.body && !req.body.title && !req.body.body) {
-    res.status(400).send({
-      message: "Post Content is missing!"
-    });
-    return;
-  }
 
-  // Save Post in the database
-  Post.create(req.body, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Post."
-      });
-    else res.status(201).send(data);
-  });
+  if (req.body === undefined || (req.body.title === undefined  || req.body.body === undefined))  {
+    res.status(400).send({
+      message: "Post content has missing required fields! eg. title and body"
+    });
+  }else{
+    // Save Post in the database
+    Post.create(req.body, (err, data) => {
+      if (err)
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the Post."
+        });
+      else res.status(201).send(data);
+    });
+  }
 };
 
 // retrieve single post
@@ -61,7 +60,7 @@ exports.update = (req, res) => {
   // Validate Request
   if (req.body === undefined || (req.body.title === undefined  && req.body.body === undefined))  {
       res.status(400).send({
-        message: "Patch content has missing params!"
+        message: "Patch content has missing fields!"
       });
   }else{
     Post.updateById(
