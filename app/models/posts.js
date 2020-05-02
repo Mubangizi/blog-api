@@ -1,4 +1,4 @@
-const client = require("./database.js");
+const sql = require("./database.js");
 
 // constructor
 const Post = function(post) {
@@ -6,18 +6,21 @@ const Post = function(post) {
   this.body = post.name;
 };
 
+
 // Create Posts
 Post.create = (newPost, result) => {
-  client.query("INSERT INTO posts SET ?", newPost, (err, res) => {
+  sql.query("INSERT INTO posts SET ?", newPost, (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      console.log("Create Post error: ", err);
       result(err, null);
       return;
     }
 
     console.log("created post: ", { id: res.insertId, ...newPost });
-    result(null, { id: res.insertId, ...newCustomer });
+    result(null, { id: res.insertId, ...newPost });
   });
 };
 
-module.exports = Customer;
+
+
+module.exports = Post;

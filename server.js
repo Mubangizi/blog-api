@@ -6,10 +6,8 @@ routes = require("./app/routes");
 
 app.use(bodyParser.json());
 
+routes(app);
+
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);
 });
-
-routes(app);
-
-module.exports = app;
