@@ -50,11 +50,42 @@ Post.findById = (postId, result) => {
       result(null, res[0]);
       return;
     }
-    // not found Customer with the id
     result({ kind: "not_found" }, null);
   });
 };
 
+// delete a single Post
+Post.remove = (postId, result) => {
+  sql.query("DELETE FROM posts WHERE id = ?", postId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    if (res.affectedRows == 0) {
+      result({ kind: "not_found" }, null);
+      return;
+    }
+
+    console.log("deleted post with id: ", postId);
+    result(null, res);
+  });
+};
+
+// delete all posts
+Post.removeAll = result => {
+  sql.query("DELETE FROM posts", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log(`deleted ${res.affectedRows} posts`);
+    result(null, res);
+  });
+};
 
 
 module.exports = Post;

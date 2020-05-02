@@ -61,3 +61,33 @@ exports.findOne = (req, res) => {
     });
   });
 };
+
+
+// Delete a Post with the specified postId in the request
+exports.delete = (req, res) => {
+  Post.remove(req.params.postId, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `Post with id ${req.params.postId} not found.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Could not delete Post with id " + req.params.postId
+        });
+      }
+    } else res.send({ message: `Post was deleted successfully!` });
+  });
+};
+
+// Delete all Posts from the database.
+exports.deleteAll = (req, res) => {
+  Post.removeAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while deleting all posts."
+      });
+    else res.send({ message: `All Posts were deleted successfully!` });
+  });
+};
