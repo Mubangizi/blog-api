@@ -10,6 +10,9 @@ module.exports = app => {
   // Retrieve a single Post with postId
   app.get("/posts/:postId", posts.findOne);
 
+  // Update a Post with postId
+  app.patch("/posts/:postId", posts.update);
+
   // Delete a Post with postId
   app.delete("/posts/:postId", posts.delete);
 

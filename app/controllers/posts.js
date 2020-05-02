@@ -8,7 +8,7 @@ exports.findAll = (req, res) => {
         message:
           err.message || "Some error occurred while retrieving posts."
       });
-    else res.send({
+    else res.status(200).send({
       posts: data
     });
   });
@@ -25,13 +25,6 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Post
-  const post = new Post({
-    title: req.body.title,
-    body: req.body.body,
-  });
-  console.log(post);
-
   // Save Post in the database
   Post.create(req.body, (err, data) => {
     if (err)
@@ -39,7 +32,7 @@ exports.create = (req, res) => {
         message:
           err.message || "Some error occurred while creating the Post."
       });
-    else res.send(data);
+    else res.status(201).send(data);
   });
 };
 
@@ -56,10 +49,42 @@ exports.findOne = (req, res) => {
           message: "Error retrieving Post with id " + req.params.postId
         });
       }
-    } else res.send({
+    } else res.status(200).send({
       post: data
     });
   });
+};
+
+
+// Update a Post identified by the postId in the request
+exports.update = (req, res) => {
+  // Validate Request
+  if (req.body === undefined || (req.body.title === undefined  && req.body.body === undefined))  {
+      res.status(400).send({
+        message: "Patch content has missing params!"
+      });
+  }else{
+    Post.updateById(
+      req.params.postId,
+      req.body,
+      (err, data) => {
+        if (err) {
+          if (err.kind === "not_found") {
+            res.status(404).send({
+              message: `Post with id ${req.params.postId} not found.`
+            });
+          } else {
+            res.status(500).send({
+              message: "Error updating Post with id " + req.params.postId
+            });
+          }
+        } else res.status(200).send({
+          updatedPost: data,
+          message: "Post Updated successfully"
+        });
+      }
+    );
+  }
 };
 
 
@@ -76,7 +101,7 @@ exports.delete = (req, res) => {
           message: "Could not delete Post with id " + req.params.postId
         });
       }
-    } else res.send({ message: `Post was deleted successfully!` });
+    } else res.status(200).send({ message: `Post was deleted successfully!` });
   });
 };
 
@@ -88,6 +113,6 @@ exports.deleteAll = (req, res) => {
         message:
           err.message || "Some error occurred while deleting all posts."
       });
-    else res.send({ message: `All Posts were deleted successfully!` });
+    else res.status(200).send({ message: `All Posts were deleted successfully!` });
   });
 };
