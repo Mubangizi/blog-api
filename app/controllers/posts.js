@@ -1,5 +1,22 @@
 const Post = require("../models/posts.js");
 
+
+
+// Retrieve all Posts from the database.
+exports.findAll = (req, res) => {
+  Post.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving posts."
+      });
+    else res.send({
+      posts: data
+    });
+  });
+};
+
+
 // Create and Save a new Post
 exports.create = (req, res) => {
   const title = req.body.title, body = req.body.title
@@ -23,7 +40,7 @@ exports.create = (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Customer."
+          err.message || "Some error occurred while creating the Post."
       });
     else res.send(data);
   });
