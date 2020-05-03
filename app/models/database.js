@@ -4,10 +4,10 @@ dotenv.config();
 
 // Create a connection to the database
 const connection = mysql.createConnection({
-  user: process.env.USER,
-  host:  process.env.HOST,
-  database:  process.env.DATABASE,
-  password:  process.env.PASSWORD,
+  user: process.env.DBUSER,
+  host:  process.env.DBHOST,
+  database:  process.env.DBDATABASE,
+  password:  process.env.DBPASSWORD,
 });
 
 // open the psql connection
