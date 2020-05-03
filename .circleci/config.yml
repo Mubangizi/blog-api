@@ -6,7 +6,7 @@ jobs: # a collection of steps
       - image: circleci/node:10.16.3 # 
         # add node service and set environment variables
         environment:
-          DBHOST: 127.0.0.1
+          DBHOST: localhost
           DBUSER: circleci
           DBDATABASE: blog_api
           DBPASSWORD: circleci
