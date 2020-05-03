@@ -25,7 +25,7 @@ services:
     container_name: blog-api
     restart: unless-stopped
     ports:
-      - "5000:5500"
+      - "5000:5000"
     environment:
       DBHOST: database
       DBUSER: node
