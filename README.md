@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/Mubangizi/blog-api.svg?style=svg)](https://app.circleci.com/pipelines/github/Mubangizi/blog-api)
+
+
 # Blop Api
 An Api that provides CRUD for blog posts and commenting on corresponding posts
 
