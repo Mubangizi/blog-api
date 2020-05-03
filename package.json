@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha test --timeout 0 --exit",
-    "start": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
