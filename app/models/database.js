@@ -9,8 +9,7 @@ const connection = mysql.createConnection({
   database:  process.env.DBDATABASE,
   password:  process.env.DBPASSWORD,
 });
-
-// open the psql connection
+// open the sql connection
 connection.connect(error => {
   if (error) throw error;
   console.log("Successfully connected to the database.");

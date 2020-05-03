@@ -1,0 +1,41 @@
+version: 2.1 # use CircleCI 2.1
+jobs: # a collection of steps
+  build-and-test: # runs not using Workflows must have a `build` job as entry point
+    working_directory: ~/blog-api # directory where steps will run
+    docker: # run the steps with Docker
+      - image: circleci/node:10.16.3 # 
+        # add node service and set environment variables
+        environment:
+          DBHOST: localhost
+          DBUSER: circleci
+          DBDATABASE: blog_api
+          DBPASSWORD: circleci
+      - image: mysql:5.7
+        # add postgres service and set environment variables
+        environment:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_DATABASE: blog_api
+          MYSQL_USER: circleci
+          MYSQL_PASSWORD: circleci
+    steps:
+      - checkout # check out source code to working directory
+      - run:  # install npm
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache: 
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:  # install node dependecies
+          name: install-npm-dependecies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+      - run:  # run tests
+          name: test
+          command: npm test
+      # Todo add codecov
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
