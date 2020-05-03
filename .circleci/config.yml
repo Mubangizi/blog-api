@@ -34,9 +34,7 @@ jobs: # a collection of steps
       - run:  # run tests
           name: test
           command: npm test
-      - run: # run coverage report
-          name: code-coverage
-          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      # Todo add codecov
 workflows:
   build-and-test:
     jobs:
