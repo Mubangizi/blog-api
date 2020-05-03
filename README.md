@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Mubangizi/blog-api.svg?style=svg)](https://app.circleci.com/pipelines/github/Mubangizi/blog-api)
+[![CircleCI](https://circleci.com/gh/Mubangizi/blog-api/tree/develop.svg?style=svg)](https://github.com/Mubangizi/blog-api/tree/develop)
 
 
 # Blop Api
