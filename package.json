@@ -4,7 +4,7 @@
   "description": "For posts and there comments",
   "main": "server.js",
   "scripts": {
-    "test": "test",
+    "test": "./node_modules/.bin/mocha test --timeout 0 --exit",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -24,6 +24,9 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "mocha": "^7.1.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0"
   }
 }
