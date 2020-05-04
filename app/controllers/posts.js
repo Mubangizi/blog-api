@@ -5,10 +5,12 @@ exports.findAll = (req, res) => {
   Post.getAll((err, data) => {
     if (err)
       res.status(500).send({
+        statusType: "error",
         message:
           err.message || "Some error occurred while retrieving posts."
       });
     else res.status(200).send({
+      statusType: "success",
       posts: data
     });
   });
@@ -17,22 +19,35 @@ exports.findAll = (req, res) => {
 // Create and Save a new Post
 exports.create = (req, res) => {
   // Validate request
-
-  if (req.body === undefined || (req.body.title === undefined  || req.body.body === undefined))  {
+  if (req.body === undefined || (req.body.title === undefined  || req.body.body === undefined)){
     res.status(400).send({
+      statusType: "error",
       message: "Post content has missing required fields! eg. title and body"
     });
-  }else{
-    // Save Post in the database
-    Post.create(req.body, (err, data) => {
-      if (err)
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the Post."
-        });
-      else res.status(201).send(data);
-    });
+    return;
   }
+  if (typeof req.body.title !== 'string'  ||  typeof req.body.body !== 'string'){
+    res.status(400).send({
+      statusType: "error",
+      message: 'Title and Body fields need to be strings'
+    });
+    return;
+  }
+
+  // Save Post in the database
+  Post.create(req.body, (err, data) => {
+    if (err)
+      res.status(500).send({
+        statusType: "error",
+        message:
+          err.message || "Some error occurred while creating the Post."
+      });
+    else res.status(201).send({
+      statusType: "success",
+      data: data,
+      message: "Post created Successfully"
+    });
+  });
 };
 
 // retrieve single post
@@ -41,14 +56,17 @@ exports.findOne = (req, res) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
+          statusType: "error",
           message: `Post with id ${req.params.postId} not found.`
         });
       } else {
         res.status(500).send({
+          statusType: "error",
           message: "Error retrieving Post with id " + req.params.postId
         });
       }
     } else res.status(200).send({
+      statusType: "success",
       post: data
     });
   });
@@ -70,14 +88,17 @@ exports.update = (req, res) => {
         if (err) {
           if (err.kind === "not_found") {
             res.status(404).send({
+              statusType: "error",
               message: `Post with id ${req.params.postId} not found.`
             });
           } else {
             res.status(500).send({
+              statusType: "error",
               message: "Error updating Post with id " + req.params.postId
             });
           }
         } else res.status(200).send({
+          statusType: "success",
           updatedPost: data,
           message: "Post Updated successfully"
         });
@@ -93,14 +114,19 @@ exports.delete = (req, res) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
+          statusType: "error",
           message: `Post with id ${req.params.postId} not found.`
         });
       } else {
         res.status(500).send({
+          statusType: "error",
           message: "Could not delete Post with id " + req.params.postId
         });
       }
-    } else res.status(200).send({ message: `Post was deleted successfully!` });
+    } else res.status(200).send({ 
+      statusType: "success",
+      message: `Post was deleted successfully!` 
+    });
   });
 };
 
@@ -109,9 +135,13 @@ exports.deleteAll = (req, res) => {
   Post.removeAll((err, data) => {
     if (err)
       res.status(500).send({
+        statusType: "error",
         message:
           err.message || "Some error occurred while deleting all posts."
       });
-    else res.status(200).send({ message: `All Posts were deleted successfully!` });
+    else res.status(200).send({ 
+      statusType: "success",
+      message: `All Posts were deleted successfully!` 
+    });
   });
 };
