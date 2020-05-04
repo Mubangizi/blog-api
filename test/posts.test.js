@@ -19,7 +19,7 @@ const invalidPost = {
 };
 
 
-describe('/GET posts', () => {
+describe('GET /posts', () => {
   it('should Get all posts', (done) => {
       chai.request(server)
       .get('/posts')
@@ -32,7 +32,7 @@ describe('/GET posts', () => {
   });
 });
 
-describe('/POST post', () => {
+describe('POST /posts', () => {
 
   it('should Check the api request without params', (done) => {
       chai.request(server)
@@ -90,3 +90,20 @@ describe('/POST post', () => {
       });
   });
 });
+
+// describe('/GET/:postID post', () => {
+
+//   it('should Get a single post', (done) => {
+//       chai.request(server)
+//       .post('/posts/1')
+//       .end((err, res) => {
+//         should.not.exist(err);
+//         res.should.have.status(200);
+//         res.body.should.be.a('object');
+//         res.body.should.have.property('statusType').eq('success');
+//         done();
+//       })
+//   });
+
+// });
+
