@@ -1,16 +1,28 @@
 const express = require('express'),
-bodyParser = require("body-parser"),
-port = 6000,
-app = express();
+bodyParser = require("body-parser");
 
-routes = require("./app/routes");
+const createApp = (app_instance) =>{
+  // environment variables
+  process.env.NODE_ENV = app_instance || 'development';
+  // config variables
+   require('./app/config/config.js');
+  const app = express();
 
-app.use(bodyParser.json());
+  routes = require("./app/routes");
 
-routes(app);
+  app.use(bodyParser.json());
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}.`);
-});
+  routes(app);
+
+  app.listen(global.gConfig.node_port, () => {
+      console.log(`${global.gConfig.config_id} server running on port ${global.gConfig.node_port}`);
+  });
+  
+  return app;
+}
+
+
+const app = createApp(process.env.NODE_ENV);
 
 module.exports = app;
+

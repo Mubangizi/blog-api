@@ -16,7 +16,6 @@ Post.create = (newPost, result) => {
       return;
     }
 
-    console.log("created post: ", { id: res.insertId, ...newPost });
     result(null, { id: res.insertId, ...newPost });
   });
 };
@@ -30,8 +29,6 @@ Post.getAll = result => {
       result(null, err);
       return;
     }
-
-    console.log("posts: ", res);
     result(null, res);
   });
 };
@@ -46,7 +43,6 @@ Post.findById = (postId, result) => {
     }
 
     if (res.length) {
-      console.log("found post: ", res[0]);
       result(null, res[0]);
       return;
     }
@@ -77,8 +73,6 @@ Post.updateById = (postId, post, result) => {
         result({ kind: "not_found" }, null);
         return;
       }
-
-      console.log("updated post: ", { id: postId, ...post });
       result(null, { id: postId, ...post });
     }
   );
@@ -98,22 +92,19 @@ Post.remove = (postId, result) => {
       result({ kind: "not_found" }, null);
       return;
     }
-
-    console.log("deleted post with id: ", postId);
     result(null, res);
   });
 };
 
 // delete all posts
 Post.removeAll = result => {
-  sql.query("DELETE FROM posts", (err, res) => {
+  sql.query("TRUNCATE table posts", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} posts`);
     result(null, res);
   });
 };
