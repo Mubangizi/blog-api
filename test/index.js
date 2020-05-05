@@ -15,9 +15,9 @@ console.log(appClient);
 describe('Init', function () {
   it('check app status', function (done) {
       chai.request(server).get('/').end((err, res) => {
-          should.not.exist(err);
-          res.should.have.status(200);
-          done();
+        should.not.exist(err);
+        res.should.have.status(200);
+        done();
       })
   });
 });

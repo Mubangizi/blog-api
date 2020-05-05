@@ -52,11 +52,19 @@ exports.create = (req, res) => {
 
 // retrieve single post
 exports.findOne = (req, res) => {
+  if(isNaN(req.params.postId)){
+    res.status(401).send({
+      statusType: "Conflict",
+      message: `Post ids should be integers.`
+    });
+    return;
+  }
   Post.findById(req.params.postId, (err, data) => {
-    if (err) {
+
+    if(err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          statusType: "error",
+          statusType: "Not Found",
           message: `Post with id ${req.params.postId} not found.`
         });
       } else {
@@ -77,44 +85,58 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   // Validate Request
   if (req.body === undefined || (req.body.title === undefined  && req.body.body === undefined))  {
-      res.status(400).send({
-        message: "Patch content has missing fields!"
+    res.status(400).send({
+      statusType: "error",
+      message: "Update content has missing required fields! eg. title and body"
+    });
+    return;
+  } else if (typeof req.body.title !== 'string'  ||  typeof req.body.body !== 'string'){
+    res.status(400).send({
+      statusType: "error",
+      message: 'Title and Body fields need to be strings'
+    });
+    return;
+  }else
+  Post.updateById(
+    req.params.postId,
+    req.body,
+    (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            statusType: "error",
+            message: `Post with id ${req.params.postId} not found.`
+          });
+        } else {
+          res.status(500).send({
+            statusType: "error",
+            message: "Error updating Post with id " + req.params.postId
+          });
+        }
+      } else res.status(200).send({
+        statusType: "success",
+        updatedPost: data,
+        message: "Post Updated successfully"
       });
-  }else{
-    Post.updateById(
-      req.params.postId,
-      req.body,
-      (err, data) => {
-        if (err) {
-          if (err.kind === "not_found") {
-            res.status(404).send({
-              statusType: "error",
-              message: `Post with id ${req.params.postId} not found.`
-            });
-          } else {
-            res.status(500).send({
-              statusType: "error",
-              message: "Error updating Post with id " + req.params.postId
-            });
-          }
-        } else res.status(200).send({
-          statusType: "success",
-          updatedPost: data,
-          message: "Post Updated successfully"
-        });
-      }
-    );
-  }
+    }
+  );
 };
 
 
 // Delete a Post with the specified postId in the request
 exports.delete = (req, res) => {
+  if(isNaN(req.params.postId)){
+    res.status(401).send({
+      statusType: "Conflict",
+      message: `Post ids should be integers.`
+    });
+    return;
+  }
   Post.remove(req.params.postId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          statusType: "error",
+          statusType: "Not Found",
           message: `Post with id ${req.params.postId} not found.`
         });
       } else {

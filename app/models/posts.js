@@ -73,7 +73,6 @@ Post.updateById = (postId, post, result) => {
         result({ kind: "not_found" }, null);
         return;
       }
-
       result(null, { id: postId, ...post });
     }
   );
@@ -93,22 +92,19 @@ Post.remove = (postId, result) => {
       result({ kind: "not_found" }, null);
       return;
     }
-
-    console.log("deleted post with id: ", postId);
     result(null, res);
   });
 };
 
 // delete all posts
 Post.removeAll = result => {
-  sql.query("DELETE FROM posts", (err, res) => {
+  sql.query("TRUNCATE table posts", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    console.log(`deleted ${res.affectedRows} posts`);
     result(null, res);
   });
 };
