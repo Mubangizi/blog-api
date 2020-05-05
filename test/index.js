@@ -1,9 +1,15 @@
 const chai = require('chai'),
 chaiHttp = require('chai-http'),
-server = require('../server'),
-should = chai.should();
+should = chai.should()
+require('../app/config/config.js');
+
+appClient = global.gConfig;
 
 chai.use(chaiHttp);
+process.env.NODE_ENV = 'testing';
+const server = require('../server');
+console.log(appClient);
+
 
  
 describe('Init', function () {
@@ -20,10 +26,10 @@ describe('test database', function () {
   it('connect to database', function (done) {
     const mysql = require("mysql");
     const databaseConnetion = mysql.createConnection({
-      user: process.env.DBUSER,
-      host:  process.env.DBHOST,
-      database:  process.env.DBDATABASE,
-      password:  process.env.DBPASSWORD,
+      user: appClient.db_user,
+      host:  appClient.db_host,
+      database:  appClient.database,
+      password:  appClient.db_password,
     });
 
     databaseConnetion.connect(error =>{

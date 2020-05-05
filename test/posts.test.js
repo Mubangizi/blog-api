@@ -1,9 +1,12 @@
 const chai = require('chai'),
 chaiHttp = require('chai-http'),
-server = require('../server'),
 should = chai.should();
 
 chai.use(chaiHttp);
+
+process.env.NODE_ENV = 'testing';
+const server = require('../server');
+
 
 const testPost = {
   title: " test post title",

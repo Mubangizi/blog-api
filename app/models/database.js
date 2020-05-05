@@ -1,13 +1,15 @@
 const mysql = require("mysql");
 dotenv = require('dotenv');
 dotenv.config();
+const appClient = global.gConfig;
+
 
 // Create a connection to the database
 const connection = mysql.createConnection({
-  user: process.env.DBUSER,
-  host:  process.env.DBHOST,
-  database:  process.env.DBDATABASE,
-  password:  process.env.DBPASSWORD,
+  user: appClient.db_user,
+  host:  appClient.db_host,
+  database:  appClient.database,
+  password:  appClient.db_password,
 });
 
 // open the sql connection
