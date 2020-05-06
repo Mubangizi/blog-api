@@ -7,8 +7,8 @@ const Comment = function(comment) {
 
 
 // Create Comments
-Comment.create = (newComment, result) => {
-  sql.query("INSERT INTO comments SET ?", newComment, (err, res) => {
+Comment.create = (postId, newComment, result) => {
+  sql.query(`INSERT INTO comments  ( postId, body ) VALUES ( ${postId}, ${newComment.body} )`, (err, res) => {
     if (err) {
       console.log("Create Comment error: ", err);
       result(err, null);
@@ -21,8 +21,8 @@ Comment.create = (newComment, result) => {
 
 
 // Get all Comments
-Comment.getAll = result => {
-  sql.query("SELECT * FROM comments", (err, res) => {
+Comment.getAll = (postId, result) => {
+  sql.query(`SELECT * FROM comments WHERE postId = ${postId};`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
