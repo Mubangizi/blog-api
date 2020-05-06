@@ -10,7 +10,7 @@ const config = {
     "node_port": 6000,
     "db_user": process.env.DBUSER,
     "db_host": process.env.DBHOST,
-    "database": "blog_api",
+    "database": "blog_api_db",
     "db_password":  process.env.DBPASSWORD
   },
   "testing": {

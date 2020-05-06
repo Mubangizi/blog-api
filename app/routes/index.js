@@ -1,4 +1,5 @@
-const postsRoutes = require("./posts.js");
+const postsRoutes = require("./posts");
+const commentsRoutes = require("./comments");
 
 module.exports = app => {
   // simple route
@@ -7,5 +8,6 @@ module.exports = app => {
       message: "Welcome to Blog Api application." 
     });
   });
-  postsRoutes(app)
+  postsRoutes(app);
+  commentsRoutes(app);
 }
