@@ -8,13 +8,13 @@ jobs: # a collection of steps
         environment:
           DBHOST: localhost
           DBUSER: circleci
-          DBDATABASE: blog_api
+          DBDATABASE: blog_api_db
           DBPASSWORD: circleci
       - image: mysql:5.7
         # add postgres service and set environment variables
         environment:
           MYSQL_ROOT_PASSWORD: rootpassword
-          MYSQL_DATABASE: blog_api
+          MYSQL_DATABASE: blog_api_db
           MYSQL_USER: circleci
           MYSQL_PASSWORD: circleci
     steps:
