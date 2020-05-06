@@ -80,6 +80,7 @@ exports.create = (req, res) => {
 
 // retrieve single comment
 exports.findOne = (req, res) => {
+  checkPostExits(req, res);
   if(isNaN(req.params.commentId)){
     res.status(401).send({
       statusType: "Conflict",
@@ -87,8 +88,7 @@ exports.findOne = (req, res) => {
     });
     return;
   }
-  Comment.findById(req.params.commentId, (err, data) => {
-
+  Comment.findById(req.params.postId, req.params.commentId, (err, data) => {
     if(err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -111,21 +111,23 @@ exports.findOne = (req, res) => {
 
 // Update a Comment identified by the commentId in the request
 exports.update = (req, res) => {
+  checkPostExits(req, res);
   // Validate Request
-  if (req.body === undefined || (req.body.title === undefined  && req.body.body === undefined))  {
+  if (req.body.body === undefined)  {
     res.status(400).send({
       statusType: "error",
-      message: "Update content has missing required fields! eg. title and body"
+      message: "Comment object is missing body field"
     });
     return;
-  } else if (typeof req.body.title !== 'string'  ||  typeof req.body.body !== 'string'){
+  } else if (typeof req.body.body !== 'string'){
     res.status(400).send({
       statusType: "error",
-      message: 'Title and Body fields need to be strings'
+      message: 'Body fields needs to be strings'
     });
     return;
   }else
   Comment.updateById(
+    req.params.postId,
     req.params.commentId,
     req.body,
     (err, data) => {
@@ -153,6 +155,7 @@ exports.update = (req, res) => {
 
 // Delete a Comment with the specified commentId in the request
 exports.delete = (req, res) => {
+  checkPostExits(req, res);
   if(isNaN(req.params.commentId)){
     res.status(401).send({
       statusType: "Conflict",
@@ -160,7 +163,10 @@ exports.delete = (req, res) => {
     });
     return;
   }
-  Comment.remove(req.params.commentId, (err, data) => {
+  Comment.remove(
+    req.params.postId, 
+    req.params.commentId, 
+    (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
@@ -180,9 +186,12 @@ exports.delete = (req, res) => {
   });
 };
 
-// Delete all Comments from the database.
+// Delete all Post comments.
 exports.deleteAll = (req, res) => {
-  Comment.removeAll((err, data) => {
+  checkPostExits(req, res);
+  Comment.removeAll(
+    req.params.postId,
+    (err, data) => {
     if (err)
       res.status(500).send({
         statusType: "error",

@@ -8,7 +8,10 @@ const Comment = function(comment) {
 
 // Create Comments
 Comment.create = (postId, newComment, result) => {
-  sql.query(`INSERT INTO comments  ( postId, body ) VALUES ( ${postId}, "${newComment.body}" )`, (err, res) => {
+  sql.query(
+    `INSERT INTO comments (postId, body) 
+    VALUES ( ${postId}, "${newComment.body}")`,
+    (err, res) => {
     if (err) {
       console.log("Create Comment error: ", err);
       result(err, null);
@@ -22,7 +25,9 @@ Comment.create = (postId, newComment, result) => {
 
 // Get all Comments
 Comment.getAll = (postId, result) => {
-  sql.query(`SELECT * FROM comments WHERE postId = ${postId};`, (err, res) => {
+  sql.query(
+    `SELECT * FROM comments 
+    WHERE postId = ${postId};`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -33,8 +38,11 @@ Comment.getAll = (postId, result) => {
 };
 
 // Get a single comment
-Comment.findById = (commentId, result) => {
-  sql.query(`SELECT * FROM comments WHERE id = ${commentId}`, (err, res) => {
+Comment.findById = (postId, commentId, result) => {
+  sql.query(
+    `SELECT * FROM comments 
+    WHERE (id = ${commentId} AND postId = ${postId});`, 
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -50,9 +58,10 @@ Comment.findById = (commentId, result) => {
 };
 
 
-Comment.updateById = (commentId, comment, result) => {
+Comment.updateById = (postId, commentId, comment, result) => {
   sql.query(
-    `UPDATE comments SET body = "${comment.body}" WHERE id = ${commentId}`,
+    `UPDATE comments SET body = "${comment.body}" 
+    WHERE (id = ${commentId} AND postId = ${commentId})`,
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -72,8 +81,11 @@ Comment.updateById = (commentId, comment, result) => {
 
 
 // delete a single Comment
-Comment.remove = (commentId, result) => {
-  sql.query("DELETE FROM comments WHERE id = ?", commentId, (err, res) => {
+Comment.remove = (postId, commentId, result) => {
+  sql.query(
+    `DELETE FROM comments 
+    WHERE (id = ${commentId} AND postId = ${postId})`,
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -88,9 +100,12 @@ Comment.remove = (commentId, result) => {
   });
 };
 
-// delete all comments
-Comment.removeAll = result => {
-  sql.query("TRUNCATE table comments", (err, res) => {
+// delete all post comments
+Comment.removeAll = (postId, result) => {
+  sql.query(
+    `DELETE FROM comments
+    WHERE postId = ${postId}`,
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
