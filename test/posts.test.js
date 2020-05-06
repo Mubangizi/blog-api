@@ -156,7 +156,7 @@ describe('POSTS', () => {
   });
   
 
-  describe('PATCH /posts', () => {
+  describe('PATCH /posts/:postID', () => {
 
     it('should Check the api request without params', (done) => {
         chai.request(server)
