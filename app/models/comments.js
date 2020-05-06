@@ -8,7 +8,7 @@ const Comment = function(comment) {
 
 // Create Comments
 Comment.create = (postId, newComment, result) => {
-  sql.query(`INSERT INTO comments  ( postId, body ) VALUES ( ${postId}, ${newComment.body} )`, (err, res) => {
+  sql.query(`INSERT INTO comments  ( postId, body ) VALUES ( ${postId}, "${newComment.body}" )`, (err, res) => {
     if (err) {
       console.log("Create Comment error: ", err);
       result(err, null);

@@ -23,7 +23,7 @@ connection.query(
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     body varchar(255) NOT NULL
-  );`, (err, res) => {
+  ) engine=innodb;;`, (err, res) => {
   if (err) {
     console.log("error creating posts table: ", err);
     return;
@@ -33,12 +33,14 @@ connection.query(
 connection.query(
   `CREATE TABLE IF NOT EXISTS comments (
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    body varchar(255) NOT NULL,
     postId int NOT NULL,
-    CONSTRAINT FK_PostComment FOREIGN KEY (postId) 
+    body varchar(255) NOT NULL,
+    CONSTRAINT fk_PostsComments
+      FOREIGN KEY (postId) 
       REFERENCES posts(id)
       ON DELETE CASCADE
-  );`, (err, res) => {
+      ON UPDATE CASCADE
+  ) engine=innodb;`, (err, res) => {
   if (err) {
     console.log("error creating comments table: ", err);
     return;

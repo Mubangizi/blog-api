@@ -1,7 +1,6 @@
 const Comment = require("../models/comments.js"),
-Post = require("../models/posts.js"),
-postId,
-checkPostExits = (req, res) =>{
+Post = require("../models/posts.js");
+const checkPostExits = (req, res) =>{
   if(isNaN(req.params.postId)){
     res.status(401).send({
       statusType: "Conflict",
@@ -23,15 +22,14 @@ checkPostExits = (req, res) =>{
           message: "Error retrieving Post with id " + req.params.postId
         });
       }
-    } else 
-      return data.id;
+    }
   });
 }
 
 // Retrieve all Post Comments.
 exports.findAll = (req, res) => {
-  postId = checkPostExits(req, res);
-  Comment.getAll(postId, (err, data) => {
+  checkPostExits(req, res);
+  Comment.getAll(req.params.postId, (err, data) => {
     if (err)
       res.status(500).send({
         statusType: "error",
@@ -47,7 +45,7 @@ exports.findAll = (req, res) => {
 
 // Create and Save a new Comment
 exports.create = (req, res) => {
-  postId = checkPostExits(req, res);
+  checkPostExits(req, res);
   // Validate request
   if (req.body === undefined){
     res.status(400).send({
@@ -65,7 +63,7 @@ exports.create = (req, res) => {
   }
 
   // Save Comment in the database
-  Comment.create(postId, req.body, (err, data) => {
+  Comment.create(req.params.postId, req.body, (err, data) => {
     if (err)
       res.status(500).send({
         statusType: "error",
