@@ -98,7 +98,7 @@ Post.remove = (postId, result) => {
 
 // delete all posts
 Post.removeAll = result => {
-  sql.query("TRUNCATE table posts", (err, res) => {
+  sql.query("DELETE FROM posts", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

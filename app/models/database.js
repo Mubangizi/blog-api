@@ -23,7 +23,7 @@ connection.query(
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     body varchar(255) NOT NULL
-  ) engine=innodb;;`, (err, res) => {
+  ) engine=innodb;`, (err, res) => {
   if (err) {
     console.log("error creating posts table: ", err);
     return;

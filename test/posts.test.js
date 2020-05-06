@@ -26,19 +26,23 @@ const updatePost = {
 }
 
 
-
 describe('POSTS', () => {
 
   after(function(done) {  
     const sql = require("../app/models/database");
-    sql.query("Truncate table posts;", (err, res) => {
+    sql.query(`SET FOREIGN_KEY_CHECKS = 0;`);
+    sql.query(
+      `TRUNCATE posts;`, (err, res) => {
       if (err) {
-        console.log("Truncate Database error: ", err);
+        console.log("Truncate posts table error: ", err);
         result(err, null);
       }
       done();
     });
+    sql.query(`SET FOREIGN_KEY_CHECKS = 1;`);
+
   });
+
   describe('GET /posts', () => {
     it('should Get all posts', (done) => {
         chai.request(server)
