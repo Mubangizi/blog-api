@@ -2,8 +2,8 @@ const sql = require("./database.js");
 
 // constructor
 const Post = function(post) {
-  this.title = post.email;
-  this.body = post.name;
+  this.title = post.title;
+  this.body = post.body;
 };
 
 
