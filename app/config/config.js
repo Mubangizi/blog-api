@@ -7,7 +7,7 @@ dotenv.config();
 const config = {
   "development": {
     "config_id": "development",
-    "node_port": 6000,
+    "node_port": 4000,
     "db_user": process.env.DBUSER,
     "db_host": process.env.DBHOST,
     "database": "blog_api_db",
@@ -15,7 +15,7 @@ const config = {
   },
   "testing": {
     "config_id": "testing",
-    "node_port": 6000,
+    "node_port": 4000,
     "db_user": process.env.DBUSER,
     "db_host": process.env.DBHOST,
     "db_password":  process.env.DBPASSWORD,
