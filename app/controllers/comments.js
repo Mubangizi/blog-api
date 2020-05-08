@@ -1,34 +1,41 @@
 const Comment = require("../models/comments.js"),
 Post = require("../models/posts.js");
-const checkPostExits = (req, res) =>{
+
+
+const checkPostExits = (req, res,) =>{
   if(isNaN(req.params.postId)){
     res.status(401).send({
       statusType: "Conflict",
       message: `Post ids should be integers.`
     });
-    return;
+    return null;
   }
-  Post.findById(req.params.postId, (err, data) => {
-
+  return Post.findById(req.params.postId, (err, data) => {
     if(err) {
       if (err.kind === "not_found") {
         res.status(404).send({
           statusType: "Not Found",
           message: `Post with id ${req.params.postId} not found.`
         });
+        return null
       } else {
         res.status(500).send({
           statusType: "error",
           message: "Error retrieving Post with id " + req.params.postId
         });
+        return null
       }
     }
+    return 0;
   });
+  
 }
 
 // Retrieve all Post Comments.
 exports.findAll = (req, res) => {
-  checkPostExits(req, res);
+  const post = checkPostExits(req, res);
+  console.log("for post "+post);
+  if(post === null) return;
   Comment.getAll(req.params.postId, (err, data) => {
     if (err)
       res.status(500).send({

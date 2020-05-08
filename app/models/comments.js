@@ -61,7 +61,7 @@ Comment.findById = (postId, commentId, result) => {
 Comment.updateById = (postId, commentId, comment, result) => {
   sql.query(
     `UPDATE comments SET body = "${comment.body}" 
-    WHERE (id = ${commentId} AND postId = ${commentId})`,
+    WHERE (id = ${commentId} AND postId = ${postId})`,
     (err, res) => {
       if (err) {
         console.log("error: ", err);
