@@ -10,23 +10,21 @@ const checkPostExits = (req, res,) =>{
     });
     return null;
   }
-  return Post.findById(req.params.postId, (err, data) => {
+  Post.findById(req.params.postId, (err, data) => {
     if(err) {
       if (err.kind === "not_found") {
         res.status(404).send({
           statusType: "Not Found",
           message: `Post with id ${req.params.postId} not found.`
         });
-        return null
       } else {
         res.status(500).send({
           statusType: "error",
           message: "Error retrieving Post with id " + req.params.postId
         });
-        return null
       }
+      return null;
     }
-    return 0;
   });
   
 }
@@ -34,7 +32,6 @@ const checkPostExits = (req, res,) =>{
 // Retrieve all Post Comments.
 exports.findAll = (req, res) => {
   const post = checkPostExits(req, res);
-  console.log("for post "+post);
   if(post === null) return;
   Comment.getAll(req.params.postId, (err, data) => {
     if (err)
@@ -54,10 +51,10 @@ exports.findAll = (req, res) => {
 exports.create = (req, res) => {
   checkPostExits(req, res);
   // Validate request
-  if (req.body === undefined){
+  if (req.body === undefined || req.body.body === undefined){
     res.status(400).send({
       statusType: "error",
-      message: "Comment content has missing required fields! eg. body"
+      message: "Comment content has missing required body fields"
     });
     return;
   }
@@ -129,7 +126,7 @@ exports.update = (req, res) => {
   } else if (typeof req.body.body !== 'string'){
     res.status(400).send({
       statusType: "error",
-      message: 'Body fields needs to be strings'
+      message: 'Body field needs to be a string'
     });
     return;
   }else
