@@ -33,6 +33,7 @@ const checkPostExits = (req, res,) =>{
 exports.findAll = (req, res) => {
   const post = checkPostExits(req, res);
   if(post === null) return;
+  if(res.headersSent) return;
   Comment.getAll(req.params.postId, (err, data) => {
     if (err)
       res.status(500).send({

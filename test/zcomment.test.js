@@ -121,17 +121,6 @@ describe('COMMENTS', () => {
         });
     });
 
-    // it('should not Get comments for a non exiting post', (done) => {
-    //   chai.request(server)
-    //   .get('/posts/4/comments')
-    //   .end((err, res) => {
-    //     res.should.have.status(404);
-    //     res.body.should.have.property('statusType').eq('Not Found');
-    //     res.body.should.be.a('object');
-    //     done();
-    //   });
-    // });
-
     it('should not Get comments for non integer post parameter', (done) => {
       chai.request(server)
       .get('/posts/asd/comments')
@@ -142,6 +131,17 @@ describe('COMMENTS', () => {
         done();
       });
     });
+
+    // it('should not Get comments for a non exiting post', (done) => {
+    //   chai.request(server)
+    //   .get('/posts/4/comments')
+    //   .end((err, res) => {
+    //     res.should.have.status(404);
+    //     res.body.should.have.property('statusType').eq('Not Found');
+    //     res.body.should.be.a('object');
+    //     done();
+    //   });
+    // });
     
   });
 

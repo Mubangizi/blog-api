@@ -46,7 +46,7 @@ An Api that provides CRUD for blog posts and commenting on corresponding posts
  - To start development environment, run `npm run dev`
 
 ### To see api docs for the app
-  - Once the app is running got to browser enter `<appUrl:port>/api-docs` endpoint.
+  - Once the app is running got to browser enter `<hostUrl:port>/api-docs` endpoint.
 
 ### Testing:
  - To test the app run command `npm test`
