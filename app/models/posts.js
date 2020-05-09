@@ -48,6 +48,7 @@ Post.findById = (postId, result) => {
     }
     result({ kind: "not_found" }, null);
   });
+  return result;
 };
 
 
