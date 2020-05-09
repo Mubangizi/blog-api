@@ -4,8 +4,9 @@
   "description": "For posts and there comments",
   "main": "server.js",
   "scripts": {
-    "test": "test",
-    "start": "nodemon server.js"
+    "test": "./node_modules/.bin/mocha test --timeout 0 --exit",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,15 @@
   "homepage": "https://github.com/Mubangizi/blog-api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "mocha": "^7.1.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0"
   }
 }

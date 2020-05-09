@@ -1,18 +1,34 @@
 const express = require('express'),
-bodyParser = require("body-parser"),
-port = 50000,
-app = express();
+swaggerUi = require('swagger-ui-express'),
+apiDocumentation = require('./api_docs.json'),
+bodyParser = require("body-parser");
 
-app.use(bodyParser.json());
+const createApp = (app_instance) =>{
+  // environment variables
+  process.env.NODE_ENV = app_instance || 'development';
+  // config variables
+   require('./app/config/config.js');
+  const app = express();
 
-app.listen(port, () => {
-  console.log('Server is running on port ' +port);
-});
+  routes = require("./app/routes");
 
- 
-//root URL (/)
-app.get('/', (req, res)=> {
-  res.status(200).send('App running successfully!');
-})
+  app.use(bodyParser.json());
+
+  routes(app);
+
+  app.listen(global.gConfig.node_port, () => {
+      console.log(`${global.gConfig.config_id} server running on port ${global.gConfig.node_port}`);
+  });
+  
+  return app;
+}
+
+
+const app = createApp(process.env.NODE_ENV);
+
+// api documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(apiDocumentation));
+
 
 module.exports = app;
+

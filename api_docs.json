@@ -1,0 +1,450 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Blog Api",
+    "description": "Api for CRUD for posts and relative comments",
+    "version": "1.0.0",
+    "contact": {
+      "email": "mubangizia22@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "posts",
+      "description": "post end points"
+    },
+    {
+      "name": "comments",
+      "description": "comments end points"
+    }
+  ],
+  
+  "paths": {
+
+    "/posts": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Gets all posts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully gets Posts"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Creates a new post",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Post params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/blog-post"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created a new Post"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Deletes all posts from database",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully deleted all Posts"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/posts/{postId}":{
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Gets a single post",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully gets a single Post"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Updates an existing post",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Post params",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/blog-post"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully updates existing Post"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Deletes single post",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully deleted Post"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/posts/{postId}/comments": {
+      "get": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Gets all post's comments",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully gets Comments"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Creates a new comment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Comment params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/post-comment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully created a new Comment"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Deletes all comments from post",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully deleted all Post's Comments"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/posts/postId/comments/{commentId}":{
+      "get": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Gets a single post comment",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully gets a single Post's comment"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Updates an existing post's comment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Comment params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/post-comment"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully updates existing Post's comment"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Deletes single comment from post",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postId",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "commentId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully deleted comment from Post"
+          },
+          "401": {
+            "description": "invalid input, object invalid"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "blog-post": {
+      "type": "object",
+      "required": [
+        "title",
+        "body"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "post title"
+        },
+        "body": {
+          "type": "string",
+          "example": "post body"
+        }
+      }
+    },
+    "post-comment": {
+      "type": "object",
+      "required": [
+        "body"
+      ],
+      "properties": {
+        "body": {
+          "type": "string",
+          "example": "comment body"
+        }
+      }
+    }
+  }
+}
